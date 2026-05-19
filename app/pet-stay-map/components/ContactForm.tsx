@@ -19,14 +19,16 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <p className="text-center text-green-400 py-8">
-        요청이 접수되었습니다. 확인 후 반영하겠습니다.
-      </p>
+      <div className="text-center py-12">
+        <div className="text-5xl mb-3">🐾</div>
+        <p className="text-amber-500 font-semibold text-lg">요청이 접수되었습니다!</p>
+        <p className="text-gray-400 text-sm mt-1">확인 후 반영하겠습니다.</p>
+      </div>
     );
   }
 
   const inputClass =
-    "w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 placeholder:text-gray-500";
+    "w-full bg-white border border-amber-200 text-gray-700 text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100 placeholder:text-gray-300";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3 max-w-lg mx-auto">
@@ -41,9 +43,9 @@ export default function ContactForm() {
       />
       <button
         type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition-colors"
+        className="w-full bg-amber-400 hover:bg-amber-500 text-white font-semibold py-3 rounded-xl shadow-md transition-colors"
       >
-        요청 보내기
+        🐶 요청 보내기
       </button>
     </form>
   );
