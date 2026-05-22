@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Script from "next/script";
 
 const NaverMap = dynamic(() => import("./NaverMap"), { ssr: false });
 
@@ -26,14 +27,23 @@ const CATEGORIES = [
   { key: "park", label: "산책", emoji: "🌳" },
 ];
 
-type Props = { places: Place[] };
+type Props = {
+  places: Place[];
+  naverClientId: string;
+};
 
-export default function MapPage({ places }: Props) {
+export default function MapPage({ places, naverClientId }: Props) {
   const [activeCategory, setActiveCategory] = useState("all");
-  const [keyword, setKeyword] = useState("");
+  const [mapReady, setMapReady] = useState(false);
 
   return (
     <div className="flex flex-col h-screen bg-amber-50">
+      <Script
+        src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${naverClientId}`}
+        strategy="afterInteractive"
+        onLoad={() => setMapReady(true)}
+      />
+
       {/* Header */}
       <header className="flex items-center gap-3 px-4 h-14 bg-white border-b border-amber-100 shadow-sm shrink-0">
         <Image src="/pet-logo.png" alt="펫플레이스" width={32} height={32} className="rounded-xl" />
@@ -41,8 +51,6 @@ export default function MapPage({ places }: Props) {
         <div className="flex-1 ml-2">
           <input
             type="search"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
             placeholder="병원, 호텔, 카페 검색..."
             className="w-full bg-amber-50 border border-amber-200 rounded-full px-4 py-1.5 text-sm focus:outline-none focus:border-amber-400 placeholder:text-gray-300"
           />
@@ -51,7 +59,16 @@ export default function MapPage({ places }: Props) {
 
       {/* Map */}
       <div className="flex-1 relative">
-        <NaverMap places={places} activeCategory={activeCategory} />
+        {mapReady ? (
+          <NaverMap places={places} activeCategory={activeCategory} />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-amber-50">
+            <div className="text-center">
+              <div className="text-4xl mb-3">🗺️</div>
+              <p className="text-gray-400 text-sm">지도를 불러오는 중...</p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Category Tabs */}
