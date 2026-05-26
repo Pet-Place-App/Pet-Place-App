@@ -1,6 +1,8 @@
 import { supabase } from "@/lib/supabase";
 import MapPage from "./map/MapPage";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const { data: places } = await supabase
     .from("places")
