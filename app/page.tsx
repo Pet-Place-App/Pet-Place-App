@@ -5,43 +5,40 @@ import { supabase } from "@/lib/supabase";
 export const revalidate = 0;
 
 const CATEGORY_ICONS = [
-  { key: "hospital",  label: "동물병원", icon: "🏥", href: "/search?category=hospital" },
-  { key: "hotel",     label: "호텔",     icon: "🏨", href: "/search?category=hotel" },
-  { key: "cafe",      label: "펫카페",   icon: "☕", href: "/search?category=cafe" },
-  { key: "park",      label: "공원",     icon: "🌳", href: "/search?category=park" },
-  { key: "grooming",  label: "미용",     icon: "✂️", href: "/search?category=grooming" },
-  { key: "training",  label: "훈련",     icon: "🎓", href: "/search?category=training" },
-  { key: "supply",    label: "용품점",   icon: "🛒", href: "/search?category=supply" },
-  { key: "photo",     label: "촬영",     icon: "📷", href: "/search?category=photo" },
+  { key: "hotel",    label: "펫호텔",    img: "/cat-hotel.png",    href: "/search?category=hotel" },
+  { key: "grooming", label: "미용실",    img: "/cat-grooming.png", href: "/search?category=grooming" },
+  { key: "hospital", label: "동물병원",  img: "/cat-hospital.png", href: "/search?category=hospital" },
+  { key: "training", label: "훈련·유치원", img: "/cat-training.png", href: "/search?category=training" },
+  { key: "taxi",     label: "펫택시",    img: "/cat-taxi.png",     href: "/search?category=taxi" },
+  { key: "sitter",   label: "펫시터",    img: "/cat-sitter.png",   href: "/search?category=sitter" },
+  { key: "supply",   label: "용품·간식", img: "/cat-supply.png",   href: "/search?category=supply" },
+  { key: "all",      label: "전체보기",  img: "/cat-all.png",      href: "/search" },
 ];
 
+const CARD_IMAGES: Record<string, string> = {
+  hotel:    "/card-hotel.png",
+  grooming: "/card-grooming.png",
+  hospital: "/card-hospital.png",
+  training: "/card-training.png",
+  sitter:   "/card-sitter.png",
+  cafe:     "/card-hotel.png",
+  park:     "/card-hospital.png",
+};
+
 const BOTTOM_BANNERS = [
-  { icon: "👨‍⚕️", title: "수의사 상담", desc: "집에서 편하게 전문 수의사 상담", color: "bg-orange-50 border-orange-100" },
-  { icon: "📅", title: "24시간 예약", desc: "언제든지 간편하게 예약하세요", color: "bg-blue-50 border-blue-100" },
-  { icon: "🐾", title: "동물보험", desc: "소중한 반려동물 건강을 지켜요", color: "bg-green-50 border-green-100" },
-  { icon: "24", title: "24시간 고객센터", desc: "02-123-4567", color: "bg-purple-50 border-purple-100" },
+  { icon: "🛡️", title: "안심할 수 있는 서비스", desc: "검증된 업체와 리뷰 시스템" },
+  { icon: "📅", title: "간편한 예약",            desc: "원하는 시간에 쉽게 예약" },
+  { icon: "🎁", title: "다양한 혜택",            desc: "명냥명냥만의 특별 할인" },
+  { icon: "💬", title: "24시간 고객센터",         desc: "언제든지 문의하세요" },
 ];
 
 const DUMMY_PLACES = [
-  { id: 0, name: "멍냥 동물병원", category: "hospital", address: "서울시 마포구 합정동", rating: 4.8, review_count: 124, price_info: "30,000원~" },
-  { id: 0, name: "멍냥하우스 홈텔", category: "hotel", address: "서울시 강남구 청담동", rating: 4.6, review_count: 87, price_info: "30,000원/박~" },
-  { id: 0, name: "한강 반려견 공원", category: "park", address: "서울시 영등포구 여의도동", rating: 4.9, review_count: 312, price_info: "무료" },
-  { id: 0, name: "도그라이즈 카페", category: "cafe", address: "서울시 마포구 연남동", rating: 4.7, review_count: 203, price_info: "10,000원~" },
-  { id: 0, name: "냥냥 미용실", category: "grooming", address: "서울시 용산구 이태원동", rating: 4.5, review_count: 56, price_info: "35,000원~" },
+  { id: 0, name: "명명 호텔",      category: "hotel",    address: "서울 강남구", rating: 4.9, review_count: 125, price_info: "1박 35,000원~" },
+  { id: 0, name: "댕댕이 미용실",  category: "grooming", address: "서울 서초구", rating: 4.8, review_count: 98,  price_info: "30,000원~" },
+  { id: 0, name: "명냥 동물병원",  category: "hospital", address: "서울 송파구", rating: 4.9, review_count: 312, price_info: "진료비 10,000원~" },
+  { id: 0, name: "명냥 훈련소",    category: "training", address: "경기 성남시", rating: 4.7, review_count: 76,  price_info: "월 200,000원~" },
+  { id: 0, name: "명냥 펫시터",    category: "sitter",   address: "서울 마포구", rating: 4.9, review_count: 156, price_info: "1시간 15,000원~" },
 ];
-
-const CATEGORY_LABEL: Record<string, string> = {
-  hospital: "동물병원", hotel: "펫호텔", cafe: "펫카페", park: "공원",
-  grooming: "미용", training: "훈련", supply: "용품점", photo: "촬영",
-};
-const CATEGORY_EMOJI: Record<string, string> = {
-  hospital: "🏥", hotel: "🏨", cafe: "☕", park: "🌳",
-  grooming: "✂️", training: "🎓", supply: "🛒", photo: "📷",
-};
-const CATEGORY_BG: Record<string, string> = {
-  hospital: "bg-red-50", hotel: "bg-blue-50", cafe: "bg-yellow-50", park: "bg-green-50",
-  grooming: "bg-purple-50", training: "bg-indigo-50", supply: "bg-pink-50", photo: "bg-teal-50",
-};
 
 export default async function HomePage() {
   const { data: places } = await supabase
@@ -56,107 +53,106 @@ export default async function HomePage() {
     <div className="bg-white min-h-screen">
 
       {/* ── 히어로 섹션 ── */}
-      <section className="bg-[#FFF3E8] border-b border-orange-100">
-        <div className="max-w-[1200px] mx-auto px-5 py-12 flex items-center justify-between gap-8">
+      <section className="bg-[#FFF3E8]">
+        <div className="max-w-[1200px] mx-auto px-6 py-12 flex items-center justify-between gap-6">
 
-          {/* 좌측 콘텐츠 */}
-          <div className="flex-1 max-w-[520px]">
-            {/* 위치 태그 */}
-            <div className="flex items-center gap-1.5 text-[12px] text-[#F97316] font-medium mb-4">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-              </svg>
-              우리 동네 맛집, 동물병원, 산책길
+          {/* 좌측 */}
+          <div className="flex-1 max-w-[560px]">
+            {/* 배지 */}
+            <div className="inline-flex items-center gap-1.5 bg-white border border-orange-200 rounded-full px-3 py-1.5 text-[12px] text-orange-500 font-semibold mb-5 shadow-sm">
+              🐾 우리 아이 행복의 시작, 명냥명냥
             </div>
 
-            {/* 메인 슬로건 */}
-            <h1 className="text-[38px] font-extrabold text-gray-900 leading-[1.25] mb-3">
+            <h1 className="text-[44px] font-extrabold text-gray-900 leading-[1.2] mb-3">
               반려생활의<br />
               <span className="text-[#F97316]">모든 순간</span>을 함께
             </h1>
-            <p className="text-[14px] text-gray-500 leading-relaxed mb-7">
-              카페, 녹소, 산책로까지<br />
-              한 번에 만나보고 예약하세요.
+            <p className="text-[15px] text-gray-500 leading-relaxed mb-8">
+              카페, 숙소, 산책로까지<br />
+              한 번에 찾아보고 예약하세요.
             </p>
 
-            {/* 검색바 */}
+            {/* 검색바 — 원본과 동일한 디자인 */}
             <form action="/search" method="GET">
-              <div className="flex gap-2 bg-white rounded-2xl shadow-md p-2 border border-gray-100">
-                {/* 위치 선택 */}
-                <div className="flex items-center gap-1.5 px-3 py-2 bg-gray-50 rounded-xl text-[13px] text-gray-500 cursor-pointer hover:bg-gray-100 transition-colors whitespace-nowrap shrink-0">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2">
+              <div className="flex items-center bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
+                {/* 강아지 아이콘 */}
+                <div className="pl-3 pr-1 flex items-center shrink-0">
+                  <Image src="/searchbar-icon.png" alt="" width={36} height={36} className="rounded-lg" />
+                </div>
+                {/* 지역 선택 */}
+                <div className="flex items-center gap-1 px-3 py-3 border-r border-gray-100 text-[13px] text-gray-500 cursor-pointer whitespace-nowrap shrink-0">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
                   </svg>
-                  서울 시내 전체
+                  지역을 선택해주세요
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
-                <div className="w-px bg-gray-200 my-1" />
-                {/* 검색어 입력 */}
+                {/* 검색어 */}
                 <input
                   type="text"
                   name="q"
-                  placeholder="어디서 찾고 싶으세요?"
-                  className="flex-1 text-[13px] outline-none text-gray-700 placeholder:text-gray-300 bg-transparent px-2"
+                  placeholder="어떤 서비스를 찾고 있나요?"
+                  className="flex-1 px-4 py-3 text-[13px] outline-none text-gray-700 placeholder:text-gray-300"
                 />
                 {/* 검색 버튼 */}
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#F97316] hover:bg-[#EA6C0A] text-white text-[13px] font-bold rounded-xl transition-colors shrink-0 flex items-center gap-1.5"
+                  className="w-12 h-12 bg-[#F97316] flex items-center justify-center shrink-0 hover:bg-[#EA6C0A] transition-colors"
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
                     <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
                   </svg>
-                  검색
                 </button>
               </div>
             </form>
           </div>
 
-          {/* 우측 일러스트 */}
-          <div className="hidden lg:flex items-end justify-center gap-0 relative w-[340px] h-[220px] shrink-0">
-            {/* 배경 집/나무 장식 */}
-            <div className="absolute inset-0 flex items-end justify-center gap-3 opacity-20">
-              <div className="w-16 h-20 bg-orange-300 rounded-t-full" />
-              <div className="w-24 h-28 bg-orange-400 rounded-t-lg" />
-              <div className="w-12 h-16 bg-orange-200 rounded-t-full" />
-            </div>
-            {/* 동물 이모지 */}
-            <div className="relative z-10 text-center">
-              <div className="text-[90px] leading-none select-none">🐶</div>
-            </div>
-            <div className="relative z-10 text-center mb-4">
-              <div className="text-[70px] leading-none select-none">🐱</div>
-            </div>
-            {/* 하트 장식 */}
-            <div className="absolute top-4 right-8 text-3xl animate-bounce select-none">❤️</div>
+          {/* 우측 — 크롭한 일러스트 이미지 */}
+          <div className="hidden lg:block w-[420px] shrink-0">
+            <Image
+              src="/hero-pets.png"
+              alt="강아지와 고양이"
+              width={420}
+              height={340}
+              className="w-full h-auto object-contain"
+              priority
+            />
           </div>
         </div>
       </section>
 
       {/* ── 카테고리 아이콘 ── */}
-      <section className="max-w-[1200px] mx-auto px-5 py-8">
-        <div className="grid grid-cols-8 gap-3">
-          {CATEGORY_ICONS.map((cat) => (
-            <Link
-              key={cat.key}
-              href={cat.href}
-              className="flex flex-col items-center gap-2 py-4 px-2 bg-white rounded-2xl border border-gray-100 hover:border-orange-300 hover:shadow-md transition-all group cursor-pointer"
-            >
-              <span className="text-[28px] group-hover:scale-110 transition-transform">{cat.icon}</span>
-              <span className="text-[12px] font-medium text-gray-600 group-hover:text-[#F97316] transition-colors">{cat.label}</span>
-            </Link>
-          ))}
+      <section className="max-w-[1200px] mx-auto px-6 py-6">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <div className="grid grid-cols-8">
+            {CATEGORY_ICONS.map((cat, i) => (
+              <Link
+                key={cat.key}
+                href={cat.href}
+                className={`flex flex-col items-center gap-2 py-5 px-2 hover:bg-orange-50 transition-colors group ${i < 7 ? "border-r border-gray-100" : ""}`}
+              >
+                <Image
+                  src={cat.img}
+                  alt={cat.label}
+                  width={60}
+                  height={60}
+                  className="w-[60px] h-[60px] object-contain group-hover:scale-105 transition-transform"
+                />
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ── 추천 서비스 섹션 ── */}
-      <section className="max-w-[1200px] mx-auto px-5 pb-10">
+      {/* ── 추천 서비스 ── */}
+      <section className="max-w-[1200px] mx-auto px-6 pb-10">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-[17px] font-bold text-gray-900">멍냥이 추천 서비스</h2>
-          <Link href="/search" className="text-[13px] text-gray-400 hover:text-[#F97316] transition-colors flex items-center gap-0.5">
+          <h2 className="text-[17px] font-bold text-gray-900 flex items-center gap-1">
+            명냥이 맞춤 추천 서비스 🐾
+          </h2>
+          <Link href="/search" className="text-[13px] text-gray-400 hover:text-[#F97316] flex items-center gap-0.5">
             더보기
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
           </Link>
         </div>
 
@@ -167,15 +163,15 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 하단 배너 3개 ── */}
-      <section className="max-w-[1200px] mx-auto px-5 pb-12">
+      {/* ── 하단 배너 4개 ── */}
+      <section className="max-w-[1200px] mx-auto px-6 pb-12">
         <div className="grid grid-cols-4 gap-4">
-          {BOTTOM_BANNERS.map((banner) => (
-            <div key={banner.title} className={`${banner.color} border rounded-2xl p-5 flex items-center gap-3 cursor-pointer hover:shadow-md transition-all`}>
-              <div className="text-3xl shrink-0">{banner.icon}</div>
+          {BOTTOM_BANNERS.map((b) => (
+            <div key={b.title} className="flex items-center gap-3 p-5 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all cursor-pointer">
+              <span className="text-[28px] shrink-0">{b.icon}</span>
               <div>
-                <p className="font-bold text-[13px] text-gray-900">{banner.title}</p>
-                <p className="text-[11px] text-gray-500 mt-0.5">{banner.desc}</p>
+                <p className="font-bold text-[13px] text-gray-900">{b.title}</p>
+                <p className="text-[11px] text-gray-400 mt-0.5">{b.desc}</p>
               </div>
             </div>
           ))}
@@ -186,7 +182,7 @@ export default async function HomePage() {
   );
 }
 
-/* ── 장소 카드 컴포넌트 ── */
+/* ── 장소 카드 ── */
 type PlaceType = {
   id: number;
   name: string;
@@ -199,39 +195,53 @@ type PlaceType = {
 
 function PlaceCard({ place }: { place: PlaceType }) {
   const href = place.id ? `/places/${place.id}` : "/search";
+  const imgSrc = CARD_IMAGES[place.category] ?? "/card-hotel.png";
+
   return (
     <Link href={href} className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all group">
-      {/* 이미지/썸네일 영역 */}
-      <div className={`h-[120px] ${CATEGORY_BG[place.category] ?? "bg-gray-50"} flex items-center justify-center relative`}>
-        <span className="text-[48px] opacity-50 group-hover:scale-110 transition-transform">
-          {CATEGORY_EMOJI[place.category] ?? "🐾"}
-        </span>
+      {/* 카드 이미지 */}
+      <div className="relative bg-[#FFF3E8]">
+        <Image
+          src={imgSrc}
+          alt={place.name}
+          width={254}
+          height={158}
+          className="w-full h-auto object-cover"
+        />
         {/* 카테고리 뱃지 */}
-        <span className="absolute top-2 left-2 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/90 text-gray-700 shadow-sm">
-          {CATEGORY_LABEL[place.category] ?? place.category}
+        <span className="absolute top-2 left-2 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/95 text-gray-700 shadow-sm">
+          {place.category === "hotel" ? "펫호텔" :
+           place.category === "grooming" ? "미용실" :
+           place.category === "hospital" ? "동물병원" :
+           place.category === "training" ? "훈련·유치원" :
+           place.category === "sitter" ? "펫시터" :
+           place.category === "cafe" ? "펫카페" : place.category}
         </span>
-        {/* 찜하기 버튼 — 클라이언트 인터랙션은 상세 페이지에서 처리 */}
-        <span className="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/90 shadow-sm flex items-center justify-center text-gray-300 text-[14px]">
+        {/* 찜 버튼 */}
+        <span className="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/95 shadow-sm flex items-center justify-center text-gray-300 text-[14px]">
           ♡
         </span>
       </div>
 
-      {/* 정보 */}
+      {/* 카드 정보 */}
       <div className="p-3">
         <h3 className="font-bold text-[13px] text-gray-900 group-hover:text-[#F97316] transition-colors mb-0.5 truncate">
           {place.name}
         </h3>
         {place.address && (
-          <p className="text-[11px] text-gray-400 truncate mb-1.5">{place.address}</p>
+          <p className="text-[11px] text-gray-400 mb-1.5 truncate flex items-center gap-0.5">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="#9CA3AF"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            {place.address}
+          </p>
         )}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1">
-            <span className="text-yellow-400 text-[11px]">★</span>
-            <span className="text-[11px] font-semibold text-gray-700">{(place.rating ?? 0).toFixed(1)}</span>
-            <span className="text-[11px] text-gray-400">({place.review_count ?? 0})</span>
-          </div>
+          <span className="flex items-center gap-1 text-[11px]">
+            <span className="text-yellow-400">★</span>
+            <strong className="text-gray-700">{(place.rating ?? 0).toFixed(1)}</strong>
+            <span className="text-gray-400">({place.review_count ?? 0})</span>
+          </span>
           {place.price_info && (
-            <span className="text-[11px] font-semibold text-[#F97316]">{place.price_info}</span>
+            <span className="text-[11px] font-bold text-[#F97316]">{place.price_info}</span>
           )}
         </div>
       </div>
