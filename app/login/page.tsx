@@ -18,18 +18,14 @@ export default function LoginPage() {
         </Link>
 
         <div>
-          <h1 className="text-[40px] font-extrabold text-gray-900 leading-[1.2] mb-4">
-            반려생활의<br />
-            <span className="text-[#F97316]">모든 순간</span>을 함께
-          </h1>
-          <p className="text-[14px] text-gray-500 leading-relaxed mb-8">
-            카페, 녹소, 산책로까지<br />
-            한 번에 만나보고 예약하세요.
-          </p>
-          <div className="flex items-end gap-2">
-            <span className="text-[80px] leading-none">🐶</span>
-            <span className="text-[64px] leading-none mb-2">🐱</span>
-          </div>
+          <Image
+            src="/login-hero.png"
+            alt="반려생활의 모든 순간을 함께"
+            width={560}
+            height={440}
+            className="w-full h-auto object-contain"
+            priority
+          />
         </div>
 
         <p className="text-[11px] text-gray-400">© 2024 멍냥냥. All rights reserved.</p>
