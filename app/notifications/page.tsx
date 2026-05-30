@@ -1,3 +1,4 @@
+import Image from "next/image";
 import UserSidebar from "../components/UserSidebar";
 
 const TABS = ["전체", "예약", "리뷰", "커뮤니티", "시스템"];
@@ -31,14 +32,17 @@ export default function NotificationsPage() {
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between mb-5">
-              <div>
+              <div className="flex items-center gap-4 flex-1">
+                <div>
                 <h1 className="text-[20px] font-extrabold text-gray-900 flex items-center gap-2">
                   알림
                   {newCount > 0 && <span className="px-2 py-0.5 bg-[#F97316] text-white text-[11px] font-bold rounded-full">{newCount}</span>}
                 </h1>
                 <p className="text-[13px] text-gray-400 mt-0.5">읽지 않은 알림 <strong className="text-[#F97316]">{newCount}개</strong></p>
+                </div>
+                <Image src="/notifications-hero.png" alt="" width={200} height={130} className="h-[80px] w-auto object-contain opacity-90" />
               </div>
-              <button className="text-[12px] text-gray-400 hover:text-gray-700 font-medium">모두 읽음 처리</button>
+              <button className="text-[12px] text-gray-400 hover:text-gray-700 font-medium shrink-0">모두 읽음 처리</button>
             </div>
 
             {/* 탭 */}

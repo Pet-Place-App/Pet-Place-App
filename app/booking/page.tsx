@@ -4,12 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 
 const SERVICES = [
-  { id: "bath", label: "목욕", icon: "🛁", price: "30,000원~" },
-  { id: "grooming", label: "미용", icon: "✂️", price: "40,000원~" },
-  { id: "nail", label: "발톱", icon: "💅", price: "10,000원~" },
-  { id: "dental", label: "스케일링", icon: "🦷", price: "80,000원~" },
-  { id: "hotel", label: "호텔링", icon: "🏨", price: "30,000원/박~" },
-  { id: "photo", label: "사진촬영", icon: "📷", price: "50,000원~" },
+  { id: "hotel",    label: "펫호텔",   img: "/booking-hotel.png",    price: "30,000원/박~" },
+  { id: "grooming", label: "미용",     img: "/booking-grooming.png", price: "40,000원~" },
+  { id: "hospital", label: "동물병원", img: "/booking-hospital.png", price: "10,000원~" },
+  { id: "training", label: "훈련",     img: "/booking-training.png", price: "80,000원~" },
+  { id: "taxi",     label: "펫택시",   img: "/booking-taxi.png",     price: "20,000원~" },
+  { id: "sitter",   label: "펫시터",   img: "/booking-sitter.png",   price: "15,000원/시간~" },
 ];
 
 const TIME_SLOTS = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
@@ -82,7 +82,9 @@ export default function BookingPage() {
                       : "border-gray-100 hover:border-orange-200 hover:bg-orange-50/50"
                   }`}
                 >
-                  <span className="text-2xl">{s.icon}</span>
+                  <div className="w-14 h-10 rounded-lg overflow-hidden relative shrink-0">
+                    <Image src={s.img} alt={s.label} fill className="object-cover" />
+                  </div>
                   <div className="flex-1">
                     <p className="font-semibold text-sm text-gray-900">{s.label}</p>
                     <p className="text-xs text-orange-500">{s.price}</p>

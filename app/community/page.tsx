@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const CATEGORY_TABS = ["전체", "자유게시판", "정보공유", "질문답변", "사진자랑", "분실/실종", "입양/분양"];
@@ -27,11 +28,14 @@ export default function CommunityPage() {
     <div className="bg-[#FAFAFA] min-h-screen">
       <div className="max-w-[1200px] mx-auto px-5 py-7">
         <div className="flex items-center justify-between mb-5">
-          <div>
-            <h1 className="text-[20px] font-extrabold text-gray-900">멍냥냥 커뮤니티 🐾</h1>
-            <p className="text-[13px] text-gray-400 mt-0.5">반려동물 친구들과 이야기 나눠요</p>
+          <div className="flex items-center gap-4">
+            <div>
+              <h1 className="text-[20px] font-extrabold text-gray-900">멍냥냥 커뮤니티 🐾</h1>
+              <p className="text-[13px] text-gray-400 mt-0.5">반려동물 친구들과 이야기 나눠요</p>
+            </div>
+            <Image src="/community-hero.png" alt="" width={200} height={130} className="h-[70px] w-auto object-contain opacity-90" />
           </div>
-          <button className="px-4 py-2 bg-[#F97316] hover:bg-[#EA6C0A] text-white font-bold rounded-xl text-[13px] transition-colors">+ 글쓰기</button>
+          <button className="px-4 py-2 bg-[#F97316] hover:bg-[#EA6C0A] text-white font-bold rounded-xl text-[13px] transition-colors shrink-0">+ 글쓰기</button>
         </div>
 
         <div className="flex gap-5">
