@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 const CATEGORY_TABS = ["전체", "자유게시판", "정보공유", "질문답변", "사진자랑", "분실/실종", "입양/분양"];
@@ -14,8 +13,6 @@ const POSTS = [
   { id: 8, category: "정보공유", title: "2024년 동물병원 진료비 인상 정리 (전국 비교)", author: "정보왕", date: "2024.12.14", views: 2341, likes: 203, replies: 87, isHot: true },
 ];
 
-const POPULAR_POSTS = POSTS.filter((p) => p.isHot).slice(0, 3);
-
 const CATEGORY_STYLE: Record<string, string> = {
   "자유게시판": "bg-blue-50 text-blue-600",
   "정보공유": "bg-green-50 text-green-600",
@@ -27,159 +24,108 @@ const CATEGORY_STYLE: Record<string, string> = {
 
 export default function CommunityPage() {
   return (
-    <>
-      <div className="w-full">
-        <Image src="/img-community.png" alt="커뮤니티 화면 디자인" width={1440} height={700} className="w-full h-auto" priority />
-      </div>
-      <div className="max-w-7xl mx-auto px-6 py-8">
-      {/* 헤더 */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-xl font-bold text-gray-900">멍냥냥 커뮤니티 🐾</h1>
-          <p className="text-sm text-gray-400 mt-0.5">반려동물 친구들과 이야기 나눠요</p>
-        </div>
-        <button className="px-4 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl text-sm transition-colors">
-          + 글쓰기
-        </button>
-      </div>
-
-      <div className="flex gap-6">
-        {/* 메인 게시판 */}
-        <div className="flex-1 min-w-0">
-          {/* 카테고리 탭 */}
-          <div className="flex gap-1 mb-4 overflow-x-auto scrollbar-hide pb-1">
-            {CATEGORY_TABS.map((tab, i) => (
-              <button
-                key={tab}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors shrink-0 ${
-                  i === 0
-                    ? "bg-orange-500 text-white"
-                    : "bg-white border border-gray-200 text-gray-500 hover:border-orange-300"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
+    <div className="bg-[#FAFAFA] min-h-screen">
+      <div className="max-w-[1200px] mx-auto px-5 py-7">
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <h1 className="text-[20px] font-extrabold text-gray-900">멍냥냥 커뮤니티 🐾</h1>
+            <p className="text-[13px] text-gray-400 mt-0.5">반려동물 친구들과 이야기 나눠요</p>
           </div>
-
-          {/* 검색 + 정렬 */}
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-2.5 flex-1">
-              <svg className="text-gray-400 shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
-              </svg>
-              <input placeholder="게시글 검색..." className="flex-1 text-sm outline-none placeholder:text-gray-400" />
-            </div>
-            <select className="px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-600">
-              <option>최신순</option>
-              <option>인기순</option>
-              <option>댓글순</option>
-            </select>
-          </div>
-
-          {/* 게시글 목록 */}
-          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-            {/* 테이블 헤더 */}
-            <div className="grid grid-cols-[1fr_80px_80px_60px_60px] gap-3 px-5 py-3 bg-gray-50 border-b border-gray-100 text-xs font-bold text-gray-500">
-              <span>제목</span>
-              <span className="text-center">작성자</span>
-              <span className="text-center">작성일</span>
-              <span className="text-center">조회</span>
-              <span className="text-center">좋아요</span>
-            </div>
-
-            {POSTS.map((post) => (
-              <Link
-                key={post.id}
-                href={`/community/${post.id}`}
-                className="grid grid-cols-[1fr_80px_80px_60px_60px] gap-3 px-5 py-3.5 border-b border-gray-50 hover:bg-orange-50/50 transition-colors items-center group"
-              >
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full shrink-0 ${CATEGORY_STYLE[post.category] ?? "bg-gray-100 text-gray-500"}`}>
-                    {post.category}
-                  </span>
-                  <span className="text-sm text-gray-800 truncate group-hover:text-orange-600 font-medium">
-                    {post.isHot && <span className="text-orange-500 mr-1">🔥</span>}
-                    {post.isUrgent && <span className="text-red-500 mr-1">[긴급]</span>}
-                    {post.title}
-                  </span>
-                  {post.replies > 0 && (
-                    <span className="text-xs text-orange-400 shrink-0 font-semibold">[{post.replies}]</span>
-                  )}
-                </div>
-                <span className="text-xs text-gray-400 text-center truncate">{post.author}</span>
-                <span className="text-xs text-gray-400 text-center">{post.date.slice(5)}</span>
-                <span className="text-xs text-gray-400 text-center">{post.views.toLocaleString()}</span>
-                <span className="text-xs text-gray-400 text-center">{post.likes}</span>
-              </Link>
-            ))}
-          </div>
-
-          {/* 페이지네이션 */}
-          <div className="flex justify-center gap-1 mt-5">
-            {[1, 2, 3, 4, 5].map((p) => (
-              <button
-                key={p}
-                className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
-                  p === 1 ? "bg-orange-500 text-white" : "bg-white border border-gray-200 text-gray-500 hover:bg-gray-50"
-                }`}
-              >
-                {p}
-              </button>
-            ))}
-          </div>
+          <button className="px-4 py-2 bg-[#F97316] hover:bg-[#EA6C0A] text-white font-bold rounded-xl text-[13px] transition-colors">+ 글쓰기</button>
         </div>
 
-        {/* 우측 사이드바 */}
-        <aside className="w-56 shrink-0 space-y-4">
-          {/* 인기 게시글 */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-4">
-            <h3 className="text-xs font-bold text-gray-500 mb-3">🔥 인기 게시글</h3>
-            <div className="space-y-3">
-              {POPULAR_POSTS.map((post, i) => (
-                <Link key={post.id} href={`/community/${post.id}`} className="flex items-start gap-2 group">
-                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-500 text-xs flex items-center justify-center font-bold shrink-0">
-                    {i + 1}
-                  </span>
-                  <p className="text-xs text-gray-700 group-hover:text-orange-500 leading-relaxed line-clamp-2 transition-colors">
-                    {post.title}
-                  </p>
+        <div className="flex gap-5">
+          <div className="flex-1 min-w-0">
+            {/* 카테고리 탭 */}
+            <div className="flex gap-1.5 mb-4 overflow-x-auto scrollbar-hide pb-1">
+              {CATEGORY_TABS.map((tab, i) => (
+                <button key={tab} className={`px-3 py-1.5 rounded-full text-[12px] font-semibold whitespace-nowrap shrink-0 transition-colors ${i === 0 ? "bg-[#F97316] text-white" : "bg-white border border-gray-200 text-gray-500 hover:border-orange-300"}`}>
+                  {tab}
+                </button>
+              ))}
+            </div>
+
+            {/* 검색 */}
+            <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2 flex-1">
+                <svg className="text-gray-400 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input placeholder="게시글 검색..." className="flex-1 text-[13px] outline-none placeholder:text-gray-300" />
+              </div>
+              <select className="px-3 py-2 bg-white border border-gray-200 rounded-xl text-[12px] text-gray-600">
+                <option>최신순</option><option>인기순</option><option>댓글순</option>
+              </select>
+            </div>
+
+            {/* 게시글 테이블 */}
+            <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+              <div className="grid grid-cols-[1fr_72px_72px_52px_52px] gap-2 px-5 py-3 bg-gray-50 border-b border-gray-100 text-[11px] font-bold text-gray-500">
+                <span>제목</span>
+                <span className="text-center">작성자</span>
+                <span className="text-center">작성일</span>
+                <span className="text-center">조회</span>
+                <span className="text-center">좋아요</span>
+              </div>
+              {POSTS.map((post) => (
+                <Link
+                  key={post.id}
+                  href={`/community/${post.id}`}
+                  className="grid grid-cols-[1fr_72px_72px_52px_52px] gap-2 px-5 py-3.5 border-b border-gray-50 last:border-0 hover:bg-orange-50/40 transition-colors items-center group"
+                >
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${CATEGORY_STYLE[post.category] ?? "bg-gray-100 text-gray-500"}`}>{post.category}</span>
+                    <span className="text-[13px] text-gray-800 truncate group-hover:text-[#F97316] font-medium">
+                      {post.isHot && "🔥 "}{post.isUrgent && <span className="text-red-500">[긴급] </span>}{post.title}
+                    </span>
+                    {post.replies > 0 && <span className="text-[11px] text-[#F97316] shrink-0 font-bold">[{post.replies}]</span>}
+                  </div>
+                  <span className="text-[11px] text-gray-400 text-center truncate">{post.author}</span>
+                  <span className="text-[11px] text-gray-400 text-center">{post.date.slice(5)}</span>
+                  <span className="text-[11px] text-gray-400 text-center">{post.views.toLocaleString()}</span>
+                  <span className="text-[11px] text-gray-400 text-center">{post.likes}</span>
                 </Link>
               ))}
             </div>
-          </div>
 
-          {/* 분실/실종 빠른 접근 */}
-          <div className="bg-red-50 rounded-2xl p-4 border border-red-100">
-            <h3 className="text-xs font-bold text-red-600 mb-2">🚨 분실/실종 신고</h3>
-            <p className="text-xs text-gray-500 mb-3 leading-relaxed">
-              반려동물을 잃어버리셨나요?<br />
-              빠르게 신고하세요.
-            </p>
-            <button className="w-full py-2 bg-red-500 text-white text-xs font-bold rounded-xl hover:bg-red-600 transition-colors">
-              분실 신고하기
-            </button>
-          </div>
-
-          {/* 커뮤니티 통계 */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-4">
-            <h3 className="text-xs font-bold text-gray-500 mb-3">커뮤니티 현황</h3>
-            <div className="space-y-2">
-              {[
-                { label: "오늘 게시글", value: "34" },
-                { label: "총 회원수", value: "12,847" },
-                { label: "현재 접속자", value: "203" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex justify-between items-center">
-                  <span className="text-xs text-gray-500">{stat.label}</span>
-                  <span className="text-xs font-bold text-orange-500">{stat.value}</span>
-                </div>
+            {/* 페이지네이션 */}
+            <div className="flex justify-center gap-1 mt-5">
+              {[1, 2, 3, 4, 5].map((p) => (
+                <button key={p} className={`w-8 h-8 rounded-lg text-[13px] font-medium transition-colors ${p === 1 ? "bg-[#F97316] text-white" : "bg-white border border-gray-200 text-gray-500 hover:bg-gray-50"}`}>{p}</button>
               ))}
             </div>
           </div>
-        </aside>
+
+          {/* 우측 사이드바 */}
+          <aside className="w-[190px] shrink-0 space-y-4">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4">
+              <h3 className="text-[11px] font-bold text-gray-500 mb-3">🔥 인기 게시글</h3>
+              <div className="space-y-3">
+                {POSTS.filter(p => p.isHot).slice(0, 3).map((post, i) => (
+                  <Link key={post.id} href={`/community/${post.id}`} className="flex items-start gap-2 group">
+                    <span className="w-5 h-5 rounded-full bg-orange-100 text-[#F97316] text-[11px] flex items-center justify-center font-bold shrink-0">{i + 1}</span>
+                    <p className="text-[11px] text-gray-700 group-hover:text-[#F97316] leading-relaxed line-clamp-2">{post.title}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-red-50 rounded-2xl p-4 border border-red-100">
+              <h3 className="text-[12px] font-bold text-red-500 mb-1.5">🚨 분실/실종 신고</h3>
+              <p className="text-[11px] text-gray-500 mb-3 leading-relaxed">반려동물을 잃어버리셨나요?</p>
+              <button className="w-full py-1.5 bg-red-500 text-white text-[11px] font-bold rounded-xl hover:bg-red-600">신고하기</button>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-100 p-4">
+              <h3 className="text-[11px] font-bold text-gray-500 mb-3">커뮤니티 현황</h3>
+              {[{ label: "오늘 게시글", value: "34" }, { label: "총 회원수", value: "12,847" }, { label: "현재 접속자", value: "203" }].map((s) => (
+                <div key={s.label} className="flex justify-between items-center mb-2 last:mb-0">
+                  <span className="text-[11px] text-gray-500">{s.label}</span>
+                  <span className="text-[11px] font-bold text-[#F97316]">{s.value}</span>
+                </div>
+              ))}
+            </div>
+          </aside>
+        </div>
       </div>
     </div>
-    </>
   );
 }
