@@ -1,5 +1,7 @@
 declare namespace naver {
   namespace maps {
+    type ControlPosition = number;
+
     class Map {
       constructor(element: string | HTMLElement, options: MapOptions);
       setCenter(latLng: LatLng): void;
@@ -22,7 +24,7 @@ declare namespace naver {
       center: LatLng;
       zoom: number;
       zoomControl?: boolean;
-      zoomControlOptions?: { position: any };
+      zoomControlOptions?: { position: ControlPosition };
     }
     interface MarkerOptions {
       position: LatLng;
@@ -47,8 +49,8 @@ declare namespace naver {
       constructor(width: number, height: number);
     }
     const Position: {
-      TOP_RIGHT: any;
-      BOTTOM_RIGHT: any;
+      TOP_RIGHT: ControlPosition;
+      BOTTOM_RIGHT: ControlPosition;
     };
   }
 }
