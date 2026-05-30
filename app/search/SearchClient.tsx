@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import Script from "next/script";
+import Image from "next/image";
 import Link from "next/link";
 
 const NaverMap = dynamic(() => import("../map/NaverMap"), { ssr: false });
@@ -93,6 +94,18 @@ export default function SearchClient({ places, naverClientId, initialQuery, init
         strategy="afterInteractive"
         onLoad={() => setMapReady(true)}
       />
+
+      {/* 히어로 이미지 */}
+      <div className="w-full">
+        <Image
+          src="/img-search.png"
+          alt="검색화면 디자인"
+          width={1440}
+          height={600}
+          className="w-full h-auto object-cover"
+          priority
+        />
+      </div>
 
       <div className="max-w-7xl mx-auto px-6 py-6">
         {/* 페이지 타이틀 & 검색바 */}

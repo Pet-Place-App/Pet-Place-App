@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 const SERVICES = [
   { id: "bath", label: "목욕", icon: "🛁", price: "30,000원~" },
@@ -49,9 +50,13 @@ export default function BookingPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
-      <div className="mb-6">
-        <h1 className="text-xl font-bold text-gray-900 mb-1">서비스 예약</h1>
+    <>
+      <div className="w-full">
+        <Image src="/img-booking.png" alt="예약 화면 디자인" width={1440} height={700} className="w-full h-auto" priority />
+      </div>
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="mb-6">
+          <h1 className="text-xl font-bold text-gray-900 mb-1">서비스 예약</h1>
         <p className="text-sm text-gray-400">원하시는 서비스와 날짜·시간을 선택하세요</p>
       </div>
 
@@ -219,5 +224,6 @@ export default function BookingPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

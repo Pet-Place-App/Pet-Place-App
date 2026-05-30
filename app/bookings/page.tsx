@@ -1,3 +1,4 @@
+import Image from "next/image";
 import UserSidebar from "../components/UserSidebar";
 import Link from "next/link";
 
@@ -19,7 +20,11 @@ const STATUS_STYLE: Record<string, string> = {
 
 export default function BookingsPage() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
+    <>
+      <div className="w-full">
+        <Image src="/img-bookings.png" alt="예약내역 화면 디자인" width={1440} height={700} className="w-full h-auto" priority />
+      </div>
+      <div className="max-w-7xl mx-auto px-6 py-8">
       <div className="flex gap-6">
         <UserSidebar user={{ name: "멍냥 회원님", email: "user@petplace.kr", petCount: 2 }} />
 
@@ -118,5 +123,6 @@ export default function BookingsPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
