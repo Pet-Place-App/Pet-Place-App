@@ -210,13 +210,10 @@ function PlaceCard({ place }: { place: PlaceType }) {
         <span className="absolute top-2 left-2 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/90 text-gray-700 shadow-sm">
           {CATEGORY_LABEL[place.category] ?? place.category}
         </span>
-        {/* 찜하기 버튼 */}
-        <button
-          onClick={(e) => e.preventDefault()}
-          className="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/90 shadow-sm flex items-center justify-center text-gray-300 hover:text-red-400 transition-colors text-[14px]"
-        >
+        {/* 찜하기 버튼 — 클라이언트 인터랙션은 상세 페이지에서 처리 */}
+        <span className="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/90 shadow-sm flex items-center justify-center text-gray-300 text-[14px]">
           ♡
-        </button>
+        </span>
       </div>
 
       {/* 정보 */}
