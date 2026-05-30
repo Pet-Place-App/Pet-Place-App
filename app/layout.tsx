@@ -1,20 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import GNB from "./components/GNB";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
-  title: "펫플레이스 — 반려동물 통합 플랫폼",
-  description: "병원, 호텔, 카페, 산책 장소를 한 곳에서 찾아보세요",
+  title: "멍냥멍냥 — 반려동물 통합 플랫폼",
+  description: "반려생활의 모든 순간을 함께. 카페, 녹소, 산책로까지 한 번에 만나보고 예약하세요.",
 };
 
 export default function RootLayout({
@@ -23,11 +14,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="ko" className="h-full">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      </head>
+      <body className="min-h-full flex flex-col antialiased">
+        <GNB />
+        <main className="flex-1">
+          {children}
+        </main>
+        <Footer />
+      </body>
     </html>
   );
 }
