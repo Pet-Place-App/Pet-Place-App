@@ -1,10 +1,12 @@
+import Image from "next/image";
 import UserSidebar from "../components/UserSidebar";
 import Link from "next/link";
+import { getCategoryImage } from "@/lib/images";
 
 const DUMMY_BOOKINGS = [
-  { id: 1, name: "멍냥 동물병원", category: "동물병원", date: "2024.12.18", time: "14:00", status: "예약확정", price: "30,000원", emoji: "🏥" },
-  { id: 2, name: "멍냥하우스 홈텔", category: "펫호텔", date: "2024.12.20", time: "15:00", status: "예약확정", price: "30,000원", emoji: "🏨" },
-  { id: 3, name: "한강 반려견 공원", category: "공원", date: "2024.12.15", time: "10:00", status: "이용완료", price: "무료", emoji: "🌳" },
+  { id: 1, name: "멍냥 동물병원",   category: "hospital", date: "2024.12.18", time: "14:00", status: "예약확정", price: "30,000원" },
+  { id: 2, name: "멍냥하우스 홈텔", category: "hotel",    date: "2024.12.20", time: "15:00", status: "예약확정", price: "30,000원" },
+  { id: 3, name: "한강 반려견 공원", category: "park",    date: "2024.12.15", time: "10:00", status: "이용완료", price: "무료" },
 ];
 
 const QUICK_MENU = [
@@ -15,10 +17,10 @@ const QUICK_MENU = [
 ];
 
 const RECOMMEND = [
-  { name: "냥냥 미용실",     category: "미용",   addr: "서울시 용산구", price: "35,000원~", rating: 4.5, emoji: "✂️" },
-  { name: "럭키독 사진관",   category: "촬영",   addr: "서울시 성동구", price: "50,000원~", rating: 4.8, emoji: "📷" },
-  { name: "펫앤조이 훈련소", category: "훈련",   addr: "서울시 강북구", price: "80,000원~", rating: 4.6, emoji: "🎓" },
-  { name: "냥이 카페",       category: "펫카페", addr: "서울시 마포구", price: "10,000원~", rating: 4.7, emoji: "☕" },
+  { id: 1, name: "냥냥 미용실",     category: "grooming", addr: "서울시 용산구", price: "35,000원~", rating: 4.5 },
+  { id: 2, name: "럭키독 사진관",   category: "photo",    addr: "서울시 성동구", price: "50,000원~", rating: 4.8 },
+  { id: 3, name: "펫앤조이 훈련소", category: "training", addr: "서울시 강북구", price: "80,000원~", rating: 4.6 },
+  { id: 4, name: "냥이 카페",       category: "cafe",     addr: "서울시 마포구", price: "10,000원~", rating: 4.7 },
 ];
 
 const STATUS_STYLE: Record<string, string> = {
@@ -71,7 +73,9 @@ export default function MyPage() {
               <div className="space-y-2.5">
                 {DUMMY_BOOKINGS.map((b) => (
                   <div key={b.id} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-orange-50 transition-colors">
-                    <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-[18px] shrink-0">{b.emoji}</div>
+                    <div className="w-10 h-10 rounded-xl overflow-hidden relative shrink-0">
+                      <Image src={getCategoryImage(b.category, b.id)} alt={b.name} fill className="object-cover" />
+                    </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-semibold text-[13px] text-gray-900">{b.name}</p>
                       <p className="text-[11px] text-gray-400">{b.date} {b.time}</p>
@@ -93,13 +97,17 @@ export default function MyPage() {
               </div>
               <div className="grid grid-cols-4 gap-3">
                 {RECOMMEND.map((r) => (
-                  <div key={r.name} className="bg-gray-50 rounded-xl p-3 hover:bg-orange-50 transition-colors cursor-pointer">
-                    <div className="text-[24px] mb-1.5">{r.emoji}</div>
-                    <p className="font-bold text-[12px] text-gray-900">{r.name}</p>
-                    <p className="text-[11px] text-gray-400 mt-0.5 truncate">{r.addr}</p>
-                    <div className="flex items-center justify-between mt-1.5">
-                      <span className="text-[11px] font-bold text-[#F97316]">{r.price}</span>
-                      <span className="text-[11px] text-gray-400">★ {r.rating}</span>
+                  <div key={r.name} className="bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-md transition-all cursor-pointer">
+                    <div className="relative h-[80px] w-full">
+                      <Image src={getCategoryImage(r.category, r.id)} alt={r.name} fill className="object-cover" />
+                    </div>
+                    <div className="p-2.5">
+                      <p className="font-bold text-[12px] text-gray-900">{r.name}</p>
+                      <p className="text-[11px] text-gray-400 mt-0.5 truncate">{r.addr}</p>
+                      <div className="flex items-center justify-between mt-1.5">
+                        <span className="text-[11px] font-bold text-[#F97316]">{r.price}</span>
+                        <span className="text-[11px] text-gray-400">★ {r.rating}</span>
+                      </div>
                     </div>
                   </div>
                 ))}

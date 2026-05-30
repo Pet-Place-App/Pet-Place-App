@@ -3,7 +3,9 @@
 import { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import Script from "next/script";
+import Image from "next/image";
 import Link from "next/link";
+import { getCategoryImage } from "@/lib/images";
 
 const NaverMap = dynamic(() => import("../map/NaverMap"), { ssr: false });
 
@@ -298,10 +300,13 @@ function SearchCard({ place }: { place: Place }) {
       className="flex gap-4 bg-white rounded-2xl border border-gray-100 p-4 hover:shadow-md transition-all group"
     >
       {/* 썸네일 */}
-      <div className={`w-[110px] h-[90px] rounded-xl ${CATEGORY_BG[place.category] ?? "bg-gray-50"} flex items-center justify-center shrink-0 overflow-hidden`}>
-        <span className="text-[40px] opacity-60 group-hover:scale-110 transition-transform">
-          {CATEGORY_EMOJI[place.category] ?? "🐾"}
-        </span>
+      <div className="w-[110px] h-[90px] rounded-xl shrink-0 overflow-hidden relative">
+        <Image
+          src={getCategoryImage(place.category, place.id)}
+          alt={place.name}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform"
+        />
       </div>
 
       {/* 정보 */}
