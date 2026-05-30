@@ -185,7 +185,7 @@ export default function BookingPage() {
               <h3 className="text-xs font-bold text-gray-500">선택한 서비스</h3>
               {selectedServiceObjs.map((s) => (
                 <div key={s.id} className="flex items-center justify-between p-3 bg-orange-50 rounded-xl">
-                  <span className="text-sm font-semibold text-gray-900">{s.icon} {s.label}</span>
+                  <span className="text-sm font-semibold text-gray-900">{s.label}</span>
                   <span className="text-sm font-semibold text-orange-500">{s.price}</span>
                 </div>
               ))}
