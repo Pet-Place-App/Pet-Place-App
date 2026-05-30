@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
+import { getCategoryImage } from "@/lib/images";
 
 export const revalidate = 0;
 
@@ -15,15 +16,6 @@ const CATEGORY_ICONS = [
   { key: "all",      label: "전체보기",  img: "/cat-all.png",      href: "/search" },
 ];
 
-const CARD_IMAGES: Record<string, string> = {
-  hotel:    "/card-hotel.png",
-  grooming: "/card-grooming.png",
-  hospital: "/card-hospital.png",
-  training: "/card-training.png",
-  sitter:   "/card-sitter.png",
-  cafe:     "/card-hotel.png",
-  park:     "/card-hospital.png",
-};
 
 const BOTTOM_BANNERS = [
   { icon: "🛡️", title: "안심할 수 있는 서비스", desc: "검증된 업체와 리뷰 시스템" },
@@ -195,7 +187,7 @@ type PlaceType = {
 
 function PlaceCard({ place }: { place: PlaceType }) {
   const href = place.id ? `/places/${place.id}` : "/search";
-  const imgSrc = CARD_IMAGES[place.category] ?? "/card-hotel.png";
+  const imgSrc = getCategoryImage(place.category, place.id);
 
   return (
     <Link href={href} className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all group">

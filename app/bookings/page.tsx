@@ -1,13 +1,15 @@
+import Image from "next/image";
 import UserSidebar from "../components/UserSidebar";
 import Link from "next/link";
+import { getCategoryImage } from "@/lib/images";
 
 const TABS = ["전체", "예약확정", "이용완료", "취소됨", "노쇼"];
 
 const DUMMY_BOOKINGS = [
-  { id: 1, name: "멍냥 동물병원", category: "동물병원", date: "2024.12.18", time: "14:00 ~ 15:00", status: "예약확정", price: "30,000원", services: "기본 진료", emoji: "🏥" },
-  { id: 2, name: "멍냥하우스 홈텔", category: "펫호텔", date: "2024.12.20", time: "15:00 ~ 익일 12:00", status: "예약확정", price: "30,000원", services: "1박 호텔링", emoji: "🏨" },
-  { id: 3, name: "냥냥 미용실", category: "미용", date: "2024.12.10", time: "11:00 ~ 12:30", status: "이용완료", price: "45,000원", services: "전신 미용", emoji: "✂️" },
-  { id: 4, name: "도그라이즈 카페", category: "펫카페", date: "2024.12.05", time: "13:00 ~ 14:00", status: "이용완료", price: "10,000원", services: "입장권 1매", emoji: "☕" },
+  { id: 1, name: "멍냥 동물병원",   category: "hospital", categoryLabel: "동물병원", date: "2024.12.18", time: "14:00 ~ 15:00",    status: "예약확정", price: "30,000원", services: "기본 진료" },
+  { id: 2, name: "멍냥하우스 홈텔", category: "hotel",    categoryLabel: "펫호텔",   date: "2024.12.20", time: "15:00 ~ 익일 12:00", status: "예약확정", price: "30,000원", services: "1박 호텔링" },
+  { id: 3, name: "냥냥 미용실",     category: "grooming", categoryLabel: "미용",     date: "2024.12.10", time: "11:00 ~ 12:30",    status: "이용완료", price: "45,000원", services: "전신 미용" },
+  { id: 4, name: "도그라이즈 카페", category: "cafe",     categoryLabel: "펫카페",   date: "2024.12.05", time: "13:00 ~ 14:00",    status: "이용완료", price: "10,000원", services: "입장권 1매" },
 ];
 
 const STATUS_STYLE: Record<string, string> = {
@@ -49,11 +51,13 @@ export default function BookingsPage() {
               {DUMMY_BOOKINGS.map((b) => (
                 <div key={b.id} className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-sm transition-all">
                   <div className="flex items-start gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center text-[26px] shrink-0">{b.emoji}</div>
+                    <div className="w-14 h-14 rounded-2xl overflow-hidden relative shrink-0">
+                      <Image src={getCategoryImage(b.category, b.id)} alt={b.name} fill className="object-cover" />
+                    </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-1">
                         <div>
-                          <span className="text-[11px] font-bold text-[#F97316] mr-1.5">{b.category}</span>
+                          <span className="text-[11px] font-bold text-[#F97316] mr-1.5">{b.categoryLabel}</span>
                           <span className="font-bold text-[14px] text-gray-900">{b.name}</span>
                         </div>
                         <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full shrink-0 ${STATUS_STYLE[b.status] ?? "bg-gray-100 text-gray-500"}`}>{b.status}</span>
