@@ -6,9 +6,9 @@ import Image from "next/image";
 
 const NAV_LINKS = [
   { href: "/", label: "홈" },
-  { href: "/search", label: "서비스 메뉴" },
-  { href: "/search?tab=find", label: "펫 찾기" },
-  { href: "/encyclopedia", label: "멍냥냥 백과" },
+  { href: "/booking", label: "서비스 예약" },
+  { href: "/search", label: "펫 업체 찾기" },
+  { href: "/encyclopedia", label: "명냥명냥 혜택" },
   { href: "/community", label: "커뮤니티" },
 ];
 
