@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const CATEGORY_TABS = ["전체", "자유게시판", "정보공유", "질문답변", "사진자랑", "분실/실종", "입양/분양"];
@@ -26,7 +27,11 @@ const CATEGORY_STYLE: Record<string, string> = {
 
 export default function CommunityPage() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
+    <>
+      <div className="w-full">
+        <Image src="/img-community.png" alt="커뮤니티 화면 디자인" width={1440} height={700} className="w-full h-auto" priority />
+      </div>
+      <div className="max-w-7xl mx-auto px-6 py-8">
       {/* 헤더 */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -175,5 +180,6 @@ export default function CommunityPage() {
         </aside>
       </div>
     </div>
+    </>
   );
 }

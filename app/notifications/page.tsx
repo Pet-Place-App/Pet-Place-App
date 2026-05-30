@@ -1,3 +1,4 @@
+import Image from "next/image";
 import UserSidebar from "../components/UserSidebar";
 
 const TABS = ["전체", "예약", "리뷰", "커뮤니티", "시스템"];
@@ -24,7 +25,11 @@ export default function NotificationsPage() {
   const newCount = NOTIFICATIONS.filter((n) => n.isNew).length;
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
+    <>
+      <div className="w-full">
+        <Image src="/img-notifications.png" alt="알림 화면 디자인" width={1440} height={700} className="w-full h-auto" priority />
+      </div>
+      <div className="max-w-7xl mx-auto px-6 py-8">
       <div className="flex gap-6">
         <UserSidebar user={{ name: "멍냥 회원님", email: "user@petplace.kr", petCount: 2 }} />
 
@@ -105,5 +110,6 @@ export default function NotificationsPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

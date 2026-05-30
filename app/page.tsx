@@ -26,60 +26,16 @@ export default async function HomePage() {
 
   return (
     <div className="bg-orange-50 min-h-screen">
-      {/* 히어로 섹션 */}
-      <section className="bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 border-b border-orange-100">
-        <div className="max-w-7xl mx-auto px-6 py-14 flex items-center justify-between gap-8">
-          {/* 좌측 텍스트 */}
-          <div className="flex-1 max-w-xl">
-            <p className="text-sm text-orange-400 font-semibold mb-2 flex items-center gap-1">
-              <span>📍</span> 우리 동네 맛집, 동물병원, 산책길
-            </p>
-            <h1 className="text-4xl font-extrabold text-gray-900 leading-tight mb-4">
-              반려생활의<br />
-              <span className="text-orange-500">모든 순간</span>을 함께
-            </h1>
-            <p className="text-gray-500 text-sm mb-6 leading-relaxed">
-              카페, 녹소, 산책로까지<br />
-              한 번에 만나보고 예약하세요.
-            </p>
-
-            {/* 검색바 */}
-            <form action="/search" method="GET" className="flex gap-2">
-              <div className="flex-1 flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm">
-                <svg className="text-gray-400 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
-                </svg>
-                <input
-                  type="text"
-                  name="q"
-                  placeholder="어디서 찾고 싶으세요?"
-                  className="flex-1 text-sm outline-none text-gray-700 placeholder:text-gray-400"
-                />
-              </div>
-              <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm min-w-28">
-                <svg className="text-gray-400 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
-                </svg>
-                <span className="text-sm text-gray-500">서울 시내 전체</span>
-              </div>
-              <button
-                type="submit"
-                className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-colors text-sm shadow-sm"
-              >
-                검색
-              </button>
-            </form>
-          </div>
-
-          {/* 우측 일러스트 영역 */}
-          <div className="hidden lg:flex items-center justify-center w-80 h-64 relative">
-            <div className="absolute inset-0 bg-orange-100 rounded-3xl opacity-50" />
-            <div className="relative text-center">
-              <div className="text-8xl">🐶🐱</div>
-              <p className="text-orange-400 font-semibold mt-2 text-sm">반려동물과 함께</p>
-            </div>
-          </div>
-        </div>
+      {/* 히어로 이미지 */}
+      <section className="w-full relative">
+        <Image
+          src="/img-home.png"
+          alt="멍냥냥 홈화면"
+          width={1440}
+          height={800}
+          className="w-full h-auto object-cover"
+          priority
+        />
       </section>
 
       {/* 카테고리 아이콘 */}

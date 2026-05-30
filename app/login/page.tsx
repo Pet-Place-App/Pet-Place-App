@@ -10,21 +10,15 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-orange-50 flex">
-      {/* 좌측 히어로 */}
-      <div className="hidden lg:flex flex-col justify-center flex-1 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 px-16 border-r border-orange-100">
-        <div className="flex items-center gap-2 mb-8">
-          <Image src="/pet-logo.png" alt="멍냥멍냥" width={40} height={40} className="rounded-xl" />
-          <span className="font-extrabold text-orange-500 text-xl">멍냥멍냥</span>
-        </div>
-        <h1 className="text-4xl font-extrabold text-gray-900 leading-tight mb-4">
-          반려생활의<br />
-          <span className="text-orange-500">모든 순간</span>을 함께
-        </h1>
-        <p className="text-gray-500 text-sm leading-relaxed mb-8">
-          카페, 녹소, 산책로까지<br />
-          한 번에 만나보고 예약하세요.
-        </p>
-        <div className="text-7xl">🐶🐱</div>
+      {/* 좌측 히어로 이미지 */}
+      <div className="hidden lg:block flex-1 relative overflow-hidden">
+        <Image
+          src="/img-login.png"
+          alt="로그인 화면 디자인"
+          fill
+          className="object-cover object-left"
+          priority
+        />
       </div>
 
       {/* 우측 로그인 폼 */}
