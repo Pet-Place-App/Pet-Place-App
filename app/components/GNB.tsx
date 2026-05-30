@@ -16,28 +16,26 @@ export default function GNB() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center gap-8">
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+      <div className="max-w-[1200px] mx-auto px-5 h-[60px] flex items-center gap-6">
         {/* 로고 */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <Image src="/pet-logo.png" alt="멍냥멍냥" width={36} height={36} className="rounded-xl" />
-          <span className="font-extrabold text-orange-500 text-lg tracking-tight">멍냥멍냥</span>
+        <Link href="/" className="flex items-center gap-1.5 shrink-0">
+          <Image src="/pet-logo.png" alt="멍냥멍냥" width={32} height={32} className="rounded-lg" />
+          <span className="font-extrabold text-[#F97316] text-[17px] tracking-tight">멍냥멍냥</span>
         </Link>
 
         {/* 네비게이션 */}
-        <nav className="flex items-center gap-1 flex-1">
+        <nav className="flex items-center gap-0.5 flex-1">
           {NAV_LINKS.map((link) => {
             const isActive =
-              link.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(link.href.split("?")[0]);
+              link.href === "/" ? pathname === "/" : pathname.startsWith(link.href.split("?")[0]);
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+                className={`px-3.5 py-2 rounded-lg text-[13.5px] font-medium transition-colors whitespace-nowrap ${
                   isActive
-                    ? "text-orange-500 bg-orange-50"
+                    ? "text-[#F97316] bg-orange-50 font-semibold"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                 }`}
               >
@@ -47,28 +45,24 @@ export default function GNB() {
           })}
         </nav>
 
-        {/* 우측 버튼 */}
-        <div className="flex items-center gap-2 shrink-0">
-          <Link
-            href="/notifications"
-            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 relative"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        {/* 우측 */}
+        <div className="flex items-center gap-1 shrink-0">
+          {/* 알림 벨 */}
+          <Link href="/notifications" className="relative w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-500 rounded-full" />
+            <span className="absolute top-1.5 right-1.5 w-[7px] h-[7px] bg-[#F97316] rounded-full border border-white" />
           </Link>
-          <Link
-            href="/login"
-            className="px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors"
-          >
+
+          {/* 로그인 */}
+          <Link href="/login" className="px-3.5 py-1.5 text-[13px] font-semibold text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-50">
             로그인
           </Link>
-          <Link
-            href="/signup"
-            className="px-4 py-2 text-sm font-semibold text-white bg-orange-500 hover:bg-orange-600 rounded-lg transition-colors"
-          >
+
+          {/* 가입하기 */}
+          <Link href="/signup" className="px-4 py-1.5 text-[13px] font-bold text-white bg-[#F97316] hover:bg-[#EA6C0A] rounded-lg transition-colors">
             가입하기
           </Link>
         </div>
