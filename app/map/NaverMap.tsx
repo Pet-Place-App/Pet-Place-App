@@ -16,7 +16,7 @@ type Place = {
 
 type Props = {
   places: Place[];
-  activeCategory: string;
+  currentLocation: { lat: number; lng: number } | null;
 };
 
 const CATEGORY_COLOR: Record<string, string> = {
@@ -33,10 +33,11 @@ const CATEGORY_LABEL: Record<string, string> = {
   park: "산책",
 };
 
-export default function NaverMap({ places, activeCategory }: Props) {
+export default function NaverMap({ places, currentLocation }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<naver.maps.Map | null>(null);
   const markersRef = useRef<naver.maps.Marker[]>([]);
+  const currentLocationMarkerRef = useRef<naver.maps.Marker | null>(null);
   const infoWindowRef = useRef<naver.maps.InfoWindow | null>(null);
 
   useEffect(() => {
@@ -57,11 +58,7 @@ export default function NaverMap({ places, activeCategory }: Props) {
     markersRef.current = [];
     if (infoWindowRef.current) infoWindowRef.current.close();
 
-    const filtered = activeCategory === "all"
-      ? places
-      : places.filter((p) => p.category === activeCategory);
-
-    filtered.forEach((place) => {
+    places.forEach((place) => {
       const color = CATEGORY_COLOR[place.category] ?? "#6B7280";
       const label = CATEGORY_LABEL[place.category] ?? place.category;
 
@@ -112,7 +109,37 @@ export default function NaverMap({ places, activeCategory }: Props) {
 
       markersRef.current.push(marker);
     });
-  }, [places, activeCategory]);
+  }, [places]);
+
+  useEffect(() => {
+    if (!mapInstanceRef.current || !currentLocation) return;
+
+    const position = new naver.maps.LatLng(currentLocation.lat, currentLocation.lng);
+    mapInstanceRef.current.setCenter(position);
+    mapInstanceRef.current.setZoom(15);
+
+    if (currentLocationMarkerRef.current) {
+      currentLocationMarkerRef.current.setMap(null);
+    }
+
+    currentLocationMarkerRef.current = new naver.maps.Marker({
+      position,
+      map: mapInstanceRef.current,
+      icon: {
+        content: `
+          <div style="
+            width:18px;
+            height:18px;
+            background:#2563EB;
+            border:3px solid white;
+            border-radius:50%;
+            box-shadow:0 0 0 6px rgba(37,99,235,0.18),0 2px 8px rgba(0,0,0,0.25);
+          "></div>
+        `,
+        anchor: new naver.maps.Point(9, 9),
+      },
+    });
+  }, [currentLocation]);
 
   return <div ref={mapRef} className="w-full h-full" />;
 }
