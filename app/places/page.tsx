@@ -40,6 +40,7 @@ const CATEGORY_LABEL: Record<string, string> = {
 export default function PlacesPage() {
   const [places, setPlaces] = useState<Place[]>([]);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -51,10 +52,16 @@ export default function PlacesPage() {
     fetchPlaces();
   }, []);
 
-  const filtered =
-    activeCategory === "all"
-      ? places
-      : places.filter((p) => p.category === activeCategory);
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const filtered = places.filter((place) => {
+    const matchesCategory = activeCategory === "all" || place.category === activeCategory;
+    const matchesSearch =
+      normalizedQuery.length === 0 ||
+      place.name.toLowerCase().includes(normalizedQuery) ||
+      (place.address ?? "").toLowerCase().includes(normalizedQuery);
+
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="flex flex-col h-screen bg-amber-50">
@@ -65,6 +72,8 @@ export default function PlacesPage() {
         <div className="flex-1 ml-2">
           <input
             type="search"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
             placeholder="장소 검색..."
             className="w-full bg-amber-50 border border-amber-200 rounded-full px-4 py-1.5 text-sm focus:outline-none focus:border-amber-400 placeholder:text-gray-300"
           />
@@ -97,7 +106,9 @@ export default function PlacesPage() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="flex items-center justify-center h-40">
-            <p className="text-gray-400 text-sm">장소가 없습니다</p>
+            <p className="text-gray-400 text-sm">
+              {searchQuery.trim() ? "검색 결과가 없습니다" : "장소가 없습니다"}
+            </p>
           </div>
         ) : (
           <div className="flex flex-col gap-3">
