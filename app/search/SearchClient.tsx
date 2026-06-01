@@ -96,6 +96,14 @@ export default function SearchClient({ places, naverClientId, initialQuery, init
     });
   };
 
+  const handleViewMode = (mode: "list" | "map") => {
+    setViewMode(mode);
+    // 지도 뷰로 전환 시 이미 naver 객체가 로드됐으면 바로 mapReady
+    if (mode === "map" && !mapReady && (window as any).naver) {
+      setMapReady(true);
+    }
+  };
+
   return (
     <>
       <Script
@@ -243,7 +251,7 @@ export default function SearchClient({ places, naverClientId, initialQuery, init
               </div>
               <div className="flex p-1 bg-gray-100 rounded-lg gap-0.5">
                 <button
-                  onClick={() => setViewMode("list")}
+                  onClick={() => handleViewMode("list")}
                   className={`px-3 py-1.5 rounded-md text-[12px] font-semibold transition-colors ${
                     viewMode === "list" ? "bg-white shadow-sm text-gray-900" : "text-gray-400"
                   }`}
@@ -251,7 +259,7 @@ export default function SearchClient({ places, naverClientId, initialQuery, init
                   목록
                 </button>
                 <button
-                  onClick={() => setViewMode("map")}
+                  onClick={() => handleViewMode("map")}
                   className={`px-3 py-1.5 rounded-md text-[12px] font-semibold transition-colors ${
                     viewMode === "map" ? "bg-white shadow-sm text-gray-900" : "text-gray-400"
                   }`}
