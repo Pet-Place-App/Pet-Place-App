@@ -85,15 +85,11 @@ export default function NaverMap({ places, currentLocation }: Props) {
 
       const infoWindow = new naver.maps.InfoWindow({
         content: `
-          <div style="
-            padding:10px 14px;
-            font-family:sans-serif;
-            min-width:160px;
-          ">
-            <div style="font-weight:bold;font-size:14px;margin-bottom:4px;">${place.name}</div>
-            <div style="font-size:12px;color:#666;margin-bottom:2px;">${place.address ?? ""}</div>
-            <div style="font-size:12px;color:#666;margin-bottom:2px;">${place.hours ?? ""}</div>
-            <div style="font-size:12px;color:#f59e0b;font-weight:600;">${place.price_info ?? ""}</div>
+          <div style="padding:12px 14px;font-family:sans-serif;min-width:180px;cursor:pointer;" onclick="window.location.href='/places/${place.id}'">
+            <div style="font-weight:bold;font-size:14px;margin-bottom:4px;color:#111;">${place.name}</div>
+            <div style="font-size:12px;color:#888;margin-bottom:4px;">${place.address ?? ""}</div>
+            ${place.price_info ? `<div style="font-size:12px;color:#F97316;font-weight:600;margin-bottom:6px;">${place.price_info}</div>` : ""}
+            <div style="background:#F97316;color:white;font-size:11px;font-weight:bold;padding:4px 10px;border-radius:8px;text-align:center;">상세보기 →</div>
           </div>
         `,
         borderWidth: 0,
