@@ -4,8 +4,8 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="bg-[#3a3a3a] text-gray-300 mt-auto">
-      <div className="max-w-[1200px] mx-auto px-5 py-10">
-        <div className="grid grid-cols-4 gap-8">
+      <div className="max-w-[1200px] mx-auto px-4 py-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {/* 로고 & 슬로건 */}
           <div>
             <div className="flex items-center gap-2 mb-3">
