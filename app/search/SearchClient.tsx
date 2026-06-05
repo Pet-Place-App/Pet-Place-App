@@ -67,6 +67,7 @@ export default function SearchClient({ places, naverClientId, initialQuery, init
   const [mapReady, setMapReady]             = useState(false);
   const [sortBy, setSortBy]                 = useState("rating");
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [filterOpen, setFilterOpen]         = useState(false);
 
   // 좌측 필터 상태
   const [minRating, setMinRating]   = useState<number | null>(null);
@@ -114,52 +115,54 @@ export default function SearchClient({ places, naverClientId, initialQuery, init
 
       <div className="bg-white min-h-screen">
         {/* ── 검색 헤더 바 ── */}
-        <div className="bg-[#FFF3E8] border-b border-orange-100 py-5">
-          <div className="max-w-[1200px] mx-auto px-5">
-            <h1 className="text-[20px] font-extrabold text-gray-900 mb-1">
+        <div className="bg-[#FFF3E8] border-b border-orange-100 py-4 md:py-5">
+          <div className="max-w-[1200px] mx-auto px-4">
+            <h1 className="text-[17px] md:text-[20px] font-extrabold text-gray-900 mb-0.5">
               멍냥냥 검색
               {query && <span className="text-[#F97316] ml-2">"{query}"</span>}
             </h1>
-            <p className="text-[13px] text-gray-400 mb-4">
-              우리 동네 반려동물 시설을 찾아보세요 · 검색 결과{" "}
-              <strong className="text-[#F97316]">{filtered.length}건</strong>
+            <p className="text-[12px] md:text-[13px] text-gray-400 mb-3">
+              검색 결과 <strong className="text-[#F97316]">{filtered.length}건</strong>
             </p>
-
-            {/* 검색바 */}
             <div className="flex gap-2">
-              <div className="flex-1 flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-2.5 shadow-sm">
-                <svg className="text-gray-400 shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <div className="flex-1 flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2.5 shadow-sm">
+                <svg className="text-gray-400 shrink-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
                 </svg>
                 <input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="장소명 또는 주소 검색"
-                  className="flex-1 text-[13px] outline-none text-gray-700 placeholder:text-gray-300"
+                  className="flex-1 text-[13px] outline-none text-gray-700 placeholder:text-gray-300 min-w-0"
                 />
-                {query && (
-                  <button onClick={() => setQuery("")} className="text-gray-300 hover:text-gray-500">✕</button>
-                )}
+                {query && <button onClick={() => setQuery("")} className="text-gray-300 hover:text-gray-500 shrink-0">✕</button>}
               </div>
-              <button
-                onClick={handleLocation}
-                className="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] text-blue-500 font-semibold hover:bg-blue-50 transition-colors shadow-sm flex items-center gap-1.5"
-              >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                </svg>
-                내 위치
+              <button onClick={handleLocation} className="hidden sm:flex px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-[12px] text-blue-500 font-semibold hover:bg-blue-50 shadow-sm items-center gap-1">
+                📍 내 위치
               </button>
-              <button className="px-6 py-2.5 bg-[#F97316] hover:bg-[#EA6C0A] text-white font-bold rounded-xl transition-colors text-[13px] shadow-sm">
-                검색
-              </button>
+              <button className="px-4 py-2.5 bg-[#F97316] hover:bg-[#EA6C0A] text-white font-bold rounded-xl text-[13px] shadow-sm">검색</button>
             </div>
           </div>
         </div>
 
-        <div className="max-w-[1200px] mx-auto px-5 py-6 flex gap-5">
-          {/* ── 좌측 필터 패널 ── */}
-          <aside className="w-[200px] shrink-0 space-y-4">
+        {/* 모바일 카테고리 탭 */}
+        <div className="md:hidden overflow-x-auto scrollbar-hide bg-white border-b border-gray-100 px-4 py-2.5 flex gap-2">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => setActiveCategory(cat.key)}
+              className={`px-3 py-1.5 rounded-full text-[12px] font-semibold whitespace-nowrap shrink-0 transition-colors ${
+                activeCategory === cat.key ? "bg-[#F97316] text-white" : "bg-gray-100 text-gray-600"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="max-w-[1200px] mx-auto px-4 py-4 md:py-6 flex gap-5">
+          {/* ── 좌측 필터 패널 — 데스크탑만 표시 ── */}
+          <aside className="hidden md:block w-[200px] shrink-0 space-y-4">
             {/* 카테고리 */}
             <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
               <div className="px-4 py-3 bg-gray-50 border-b border-gray-100">

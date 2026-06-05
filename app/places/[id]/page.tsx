@@ -51,7 +51,7 @@ export default async function PlaceDetailPage({ params }: Props) {
 
       {/* ── 뒤로가기 헤더 ── */}
       <div className="bg-white border-b border-gray-100 sticky top-[60px] z-40">
-        <div className="max-w-[900px] mx-auto px-5 h-12 flex items-center gap-3">
+        <div className="max-w-[900px] mx-auto px-4 h-11 flex items-center gap-3">
           <Link href="/search" className="flex items-center gap-1.5 text-[13px] text-gray-500 hover:text-gray-800 transition-colors">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <polyline points="15 18 9 12 15 6"/>
@@ -63,11 +63,11 @@ export default async function PlaceDetailPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="max-w-[900px] mx-auto px-5 py-6 space-y-5">
+      <div className="max-w-[900px] mx-auto px-4 py-4 space-y-4">
 
         {/* ── 이미지 갤러리 ── */}
         <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
-          <div className="relative h-[320px] w-full">
+          <div className="relative h-[220px] md:h-[320px] w-full">
             <Image
               src={heroImage}
               alt={place.name}
@@ -98,7 +98,7 @@ export default async function PlaceDetailPage({ params }: Props) {
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
           <div className="flex items-start justify-between mb-3">
             <div>
-              <h1 className="text-[22px] font-extrabold text-gray-900 mb-1">{place.name}</h1>
+              <h1 className="text-[18px] md:text-[22px] font-extrabold text-gray-900 mb-1">{place.name}</h1>
               <div className="flex items-center gap-2">
                 <span className="text-yellow-400 text-[14px]">{"★".repeat(Math.round(rating))}</span>
                 <span className="text-[14px] font-bold text-gray-700">{rating.toFixed(1)}</span>
@@ -253,7 +253,7 @@ export default async function PlaceDetailPage({ params }: Props) {
 
       {/* ── 하단 고정 버튼 ── */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-lg z-50">
-        <div className="max-w-[900px] mx-auto px-5 py-3 flex gap-3">
+        <div className="max-w-[900px] mx-auto px-4 py-3 flex gap-3">
           {place.phone && (
             <a
               href={`tel:${place.phone}`}
